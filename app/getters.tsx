@@ -1,4 +1,5 @@
 export const getData = async () => {
+	'use server'
 	let response = await fetch("http://worldtimeapi.org/api/timezone/Europe/Helsinki", {
 							next: { revalidate: 10 },
 						})
