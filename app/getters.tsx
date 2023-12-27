@@ -1,14 +1,23 @@
 import { revalidatePath } from "next/cache";
+import cacheData from "memory-cache";
 
-export const getData = async () => {
-	let response = await fetch("http://worldtimeapi.org/api/timezone/Europe/Helsinki", {
-							next: { revalidate: 10 },
-						})
-  
-	let data = await response.json();
-	revalidatePath('/')
-	return data.datetime
-  
-}
+const url = "http://worldtimeapi.org/api/timezone/Europe/Helsinki"
 
 export const dynamic = 'force-dynamic'
+
+const CACHESECONDS = 10;
+
+export const getData = async () => {
+	const value = cacheData.get(url);
+	if (value) {
+	  return value
+	}
+	 else {
+		const response = await fetch(url);	
+		let data = await response.json();
+		cacheData.put(url, data.datetime, 1000*CACHESECONDS);
+
+		return data.datetime
+	}
+}
+

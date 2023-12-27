@@ -2,12 +2,10 @@
 import { getData } from "./getters";
 import { Test } from "../components/test";
 
-interface PageProps {
-  test: any
-}
+
 
 export const dynamic = "force-dynamic";
-export default async function Page(props: PageProps) {
+export default async function Page() {
 
   const test = await getData();
 
