@@ -1,25 +1,21 @@
 
-const getData = async () => {
-  let response = await fetch("http://worldtimeapi.org/api/timezone/Europe/Helsinki", {
-                          next: { revalidate: 10 },
-                      })
+import { getData } from "./getters";
+import { Test } from "../components/test";
 
-  let data = await response.json();
-  console.log(data)
-  return data.datetime
 
-}
-export const dynamic = 'force-dynamic'
-// 'auto' | 'force-dynamic' | 'error' | 'force-static'
+
 
 export default async function Page() {
 
-  let test = getData();
+  const test = await getData();
+
 
   return (
   <div>
   <h1>res</h1>
-  <span>{test}</span>
+  <Test data={test}/>
+
   </div>
   )
 }
+
